@@ -6,41 +6,51 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-puts 'Cleaning database...'
-Restaurant.destroy_all
+require "faker"
 
-puts 'Creating restaurants...'
-restaurants_attributes = [
+# TODO: Write a seed to insert 100 posts in the database
+
+puts 'Creating 5 fake restaurants...'
+5.times do
+  restaurant = Restaurant.new(
+    name:         Faker::Company.name,
+    address:      Faker::Address.full_address,
+    phone_number: Faker::PhoneNumber.phone_number,
+    category:     ["chinese", "italian", "japanese", "french", "belgian"].to_a.sample
+  )
+  restaurant.save!
+end
+
+puts 'Cleaning database...'
+Review.destroy_all
+
+puts 'Creating reviews...'
+reviews_attributes = [
   {
-    name:         "Restaurant 1",
-    address:      "London",
-    phone_number:  "+44 207 123 4567",
-    category:     ["chinese", "italian", "japanese", "french", "belgian"]
+    content:       "a review",
+    rating:        3,
+    restaurant_id: 16
   },
   {
-    name:         "Restaurant 2",
-    address:      "London",
-    phone_number:  "+44 207 123 4567",
-    category:     ["chinese", "italian", "japanese", "french", "belgian"]
+    content:       "a review",
+    rating:        3,
+    restaurant_id: 17
   },
   {
-    name:         "Restaurant 3",
-    address:      "London",
-    phone_number:  "+44 207 123 4567",
-    category:     ["chinese", "italian", "japanese", "french", "belgian"]
+    content:       "a review",
+    rating:        3,
+    restaurant_id: 18
   },
   {
-    name:         "Restaurant 4",
-    address:      "London",
-    phone_number:  "+44 207 123 4567",
-    category:     ["chinese", "italian", "japanese", "french", "belgian"]
+    content:       "a review",
+    rating:        3,
+    restaurant_id: 19
   },
-  {
-    name:         "Restaurant 5",
-    address:      "London",
-    phone_number:  "+44 207 123 4567",
-    category:     ["chinese", "italian", "japanese", "french", "belgian"]
+ {
+    content:       "a review",
+    rating:        3,
+    restaurant_id: 20
   }
 ]
-Restaurant.create!(restaurants_attributes)
+Review.create!(reviews_attributes)
 puts 'Finished!'
